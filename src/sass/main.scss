@@ -1,0 +1,105 @@
+
+// @import "blocks/headings.scss";
+
+// //import all from blocks folder
+// @import "blocks/*.scss";
+
+@import "blocks/null.scss";
+@import "blocks/variables.scss";
+@import "blocks/mixins.scss";
+
+body{
+    font-family: $font-main;
+}
+.wrapper{
+    width: 100%;
+}
+@import "blocks/header.scss";
+
+.banner{
+    @include size(500px, 100%);
+    
+    background: url(/img/banner.jpg) ;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    &__inner{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+    }
+
+    &__heading{
+        font-size: 45px;
+        text-align: center;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+    }
+
+    &__inputs{
+        @include element-flex(row, center, center);
+    }
+}
+
+.user{
+    &-input{
+        @include size(40px, 300px);
+        
+        background: white;
+        font-size: 14px;
+        padding: 10px;
+        display: inline-block;
+
+        &::placeholder{
+            text-transform: uppercase;
+            font-family: $font-main;
+            font-size: 14px;
+            color: #464545;
+        }
+    }
+    &-submit{
+        display: inline-block;
+        color: white;
+        text-transform: uppercase;
+
+        @include element-flex(row, center, center);
+
+        @include size(40px, 180px);
+        
+        font-size: 14px;
+        background: #ED1D24;
+        padding: 10px;
+    }
+}
+
+
+.content-section{
+    padding-top: 30px;
+
+    &__heading{
+        text-transform: uppercase;
+        color: $red-color;
+        text-align: center;
+        font-size: 25px;
+    }
+
+    &__content{
+        margin: 0 auto;
+        max-width: 1200px;
+        padding: 15px;
+
+        @include element-grid(repeat(4, 1fr), 1fr, 20px, 20px);
+    
+    }
+}
+
+
+.hero-image{
+    height: 350px;
+    width: 100%;
+    object-fit: cover;
+
+}

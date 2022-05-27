@@ -1,0 +1,19 @@
+@mixin element-flex($direction, $align, $justify){
+    display: flex;
+    flex-direction: $direction;
+    align-items: $align;
+    justify-content: $justify;
+}
+
+@mixin element-grid($gtcolumns, $gtrows, $rgap, $cgap){
+    display: grid;
+    grid-template-columns: $gtcolumns;
+    grid-template-rows: $gtrows;
+    row-gap: $rgap;
+    column-gap: $cgap;
+}
+
+@mixin size($height, $width){
+    height: $height;
+    width: $width;
+}
