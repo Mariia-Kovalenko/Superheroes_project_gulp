@@ -77,11 +77,11 @@ body{
 
 
 .content-section{
-    padding-top: 30px;
+    padding: 30px 0;
 
     &__heading{
         text-transform: uppercase;
-        color: $red-color;
+        color: $header-bg;
         text-align: center;
         font-size: 25px;
     }
@@ -91,15 +91,68 @@ body{
         max-width: 1200px;
         padding: 15px;
 
-        @include element-grid(repeat(4, 1fr), 1fr, 20px, 20px);
+        @include element-grid(repeat(5, 1fr), 1fr, 20px, 20px);
     
+    }
+
+    &__button{
+        @include size(50px, 200px);
+        background: $red-color;
+        color: white;
+        font-size: 14px;
+        text-transform: uppercase;
+        display: block;
+
+        @include element-flex(row, center, center);
+
+        margin: 10px auto;
     }
 }
 
+.hero {
+    &__block{
+        background-color: $header-bg;
+        height: 350px;
+        position: relative;
 
-.hero-image{
-    height: 350px;
-    width: 100%;
-    object-fit: cover;
+        cursor: pointer;
 
+        &:after{
+            content: '';
+            @include size(10px, 100%);
+            background: $red-color;
+
+            position: absolute;
+            bottom: 0;
+            z-index: 0;
+
+            transition: .3s;
+        }
+
+        &:hover:after{
+            height: 90px;
+        }
+    }
+
+    &-image {
+        @include size(260px, 100%);
+        margin-bottom: 20px;
+        & img{
+            @include image;
+        }
+    }
+
+    &__desc{
+        position: absolute;
+        z-index: 3;
+
+        text-transform: uppercase;
+        color: white;
+        font-size: 18px;
+        font-family: $second-font;
+        font-weight: 500;
+
+        margin-left: 10px;
+    }
 }
+
