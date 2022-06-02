@@ -8,8 +8,11 @@ import {toggleSideNav} from "./module/sidenav.js"
 
 let characters;
 const container = document.querySelector('.content-section__content');
-let dataLimit = 100;
-let limitChar = 10;
+const values = {
+    dataLimit: 100,
+    limitChar: 10
+}
+
 
 toggleSideNav();
 
@@ -35,22 +38,25 @@ class loadDataAPI {
 
 const loadData = new loadDataAPI();
 
-const data = loadData.getData(URL + URL_CHARACTERS, 0, dataLimit);
+const data = loadData.getData(URL + URL_CHARACTERS, 0, values.dataLimit);
 
 data.then(data => {
     characters = data;
-    console.log(characters);
+    //console.log(characters);
 
-    displayCharacters(characters, 0, 10);
+    displayCharacters(characters, 0, values.limitChar);
 
     //add Load More Button
     document.querySelector('.content-section').innerHTML += buttonTemplate('Load More');
 
 
     document.querySelector('.content-section__button').addEventListener('click', () => {
-        console.log('click');
+        //console.log('click');
         document.querySelector('.content-section__content').innerHTML = '';
-        displayCharacters(characters, 0, 20);
+        if (values.limitChar < values.dataLimit) {
+            values.limitChar += 10;
+            displayCharacters(characters, 0, values.limitChar);
+        }
     });
 });
 
@@ -59,7 +65,7 @@ function displayCharacters(characters, start, limit) {
     let i = start;
     while (limit > 0) {
         if (characters[i].thumbnail) {
-            console.log(characters[i]);
+            //console.log(characters[i]);
             const path = characters[i].thumbnail.path;
             const extension = characters[i].thumbnail.extension;
             const name = characters[i].name;
