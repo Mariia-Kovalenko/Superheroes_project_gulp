@@ -10,7 +10,8 @@ export const toggleSideNav = () => {
             if(e.target && e.target.closest('img')){
                 nav.style.right = 0;
                 body.style.overflow = 'hidden';
-                burger.style.display = 'none';
+                burger.classList.add('hide');
+                //burger.style.display = 'none';
                 
                 if(close.classList.contains('hide')){
                     close.classList.remove('hide');
@@ -22,7 +23,9 @@ export const toggleSideNav = () => {
         if(e.target && e.target.closest('img')){
             nav.style.right = '-100%';
             body.style.overflow = '';
-            burger.style.display = 'block';
+            burger.classList.remove('hide');
+            //burger.style.display = 'block';
+            
         }
         if(!close.classList.contains('hide')){
             close.classList.add('hide');
