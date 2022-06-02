@@ -2,12 +2,12 @@
 
 import axios from "axios";
 import { heroTemplate, buttonTemplate } from "./module/templates.js";
-import {API_KEY, URL, URL_COMICS, URL_CHARACTERS} from './module/api.js';
+import {API_KEY, URL, URL_CHARACTERS, URL_SEARCH_NAME} from './module/api.js';
 
 import {toggleSideNav} from "./module/sidenav.js"
 
 let characters;
-const container = document.querySelector('.content-section__content');
+//const container = document.querySelector('.content-section__content');
 const values = {
     dataLimit: 100,
     limitChar: 10
@@ -58,6 +58,11 @@ data.then(data => {
             displayCharacters(characters, 0, values.limitChar);
         }
     });
+
+
+    const search = loadData.getData(URL + URL_CHARACTERS + URL_SEARCH_NAME + 'man', 0, 50);
+    search.then(data => console.log(data))
+            .catch(err => console.log(err));
 });
 
 
