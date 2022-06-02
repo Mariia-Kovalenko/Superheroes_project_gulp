@@ -1,9 +1,8 @@
 "use strict";
 
 import axios from "axios";
-import { Button } from './module/components.js';
-import { heroTemplate } from "./module/templates.js";
-import {API_KEY, url} from './module/api.js';
+import { heroTemplate, buttonTemplate } from "./module/templates.js";
+import {API_KEY, URL, URL_COMICS, URL_CHARACTERS} from './module/api.js';
 
 import {toggleSideNav} from "./module/sidenav.js"
 
@@ -25,7 +24,7 @@ class loadDataAPI {
                     limit: end
                 }
             });
-            //return 100 records list of characters
+            //return list of characters
             return response.data.data.results;
         } catch (error) {
             console.log(error.message);
@@ -36,40 +35,40 @@ class loadDataAPI {
 
 const loadData = new loadDataAPI();
 
-const data = loadData.getData(url, 0, dataLimit);
+const data = loadData.getData(URL + URL_CHARACTERS, 0, dataLimit);
 
 data.then(data => {
     characters = data;
     console.log(characters);
 
-    for (let i = 0; i < limitChar; i++) {
-        // console.log(characters[i]);
+    displayCharacters(characters, 0, 10);
+
+    //add Load More Button
+    document.querySelector('.content-section').innerHTML += buttonTemplate('Load More');
+
+
+    document.querySelector('.content-section__button').addEventListener('click', () => {
+        console.log('click');
+        document.querySelector('.content-section__content').innerHTML = '';
+        displayCharacters(characters, 0, 20);
+    });
+});
+
+
+function displayCharacters(characters, start, limit) {
+    let i = start;
+    while (limit > 0) {
         if (characters[i].thumbnail) {
+            console.log(characters[i]);
             const path = characters[i].thumbnail.path;
             const extension = characters[i].thumbnail.extension;
             const name = characters[i].name;
 
             if (!path.includes('image_not_available')) {
-                container.innerHTML += heroTemplate(`${path}.${extension}`, name);
-                //if (limitChar < 10) {
-                    limitChar++;
-                //}
+                document.querySelector('.content-section__content').innerHTML += heroTemplate(`${path}.${extension}`, name);
+                limit--;
             }
-
-            // const image = new Image({
-            //     id: `image-${i}`,
-            //     selector: `hero-image`,
-            //     src: `${path}.${extension}`
-            // });
-        
-            // container.append(image.renderComponent());
         }
+        i++;
     }
-
-    document.querySelector('.content-section').append(new Button({
-        id: 'load-more-btn', 
-        selector: 'content-section__button', 
-        text: 'Load More'
-    }).renderComponent());
-
-});
+}

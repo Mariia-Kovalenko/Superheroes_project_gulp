@@ -1,6 +1,5 @@
 'use strict';
 
-
 export function heroTemplate(src, name) {
     return `
     <div class="hero__block">
@@ -11,5 +10,11 @@ export function heroTemplate(src, name) {
             ${name}
         </div>
     </div>
+    `;
+}
+
+export function buttonTemplate(text) {
+    return `
+    <button class="content-section__button">${text}</button>
     `;
 }
