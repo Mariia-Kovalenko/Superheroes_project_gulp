@@ -3,6 +3,10 @@
     background-color: $header-bg;
     width: 100%;
     height: 90px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    //position: relative;
 }
 
 .logo{
@@ -22,17 +26,10 @@
 
         padding: 10px 20px;
 
-        &-group{
-            @include element-flex(row, center, center);
-        
-            &:first-child li{
-                margin-right: 40px;
-            }
-        
-            &:last-child li{
-                margin-left: 40px;
-            }
+        & li:not(:last-child){
+            margin-right: 30px;
         }
+
     }
 
     &__link{
@@ -47,5 +44,17 @@
             color: $red-color;
         }
     }
+
+    &__burger{
+        display: none;
+    }
+    &__close{
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+        z-index: 200;
+    }
+
 }
 

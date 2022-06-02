@@ -5,10 +5,14 @@ import { Button } from './module/components.js';
 import { heroTemplate } from "./module/templates.js";
 import {API_KEY, url} from './module/api.js';
 
+import {toggleSideNav} from "./module/sidenav.js"
+
 let characters;
 const container = document.querySelector('.content-section__content');
 let dataLimit = 100;
 let limitChar = 10;
+
+toggleSideNav();
 
 class loadDataAPI {
     async getData(url, start, end) {
