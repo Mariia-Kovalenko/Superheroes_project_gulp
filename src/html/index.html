@@ -5,31 +5,42 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marvel</title>
-    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;500&family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;500&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/main.min.css">
 </head>
 <body>
     <div class="wrapper">
-        @@include("chunk/header.html")
+        @@include("chunk/header2.html")
 
-        <section class="banner">
-            <div class="banner__inner">
-                <h1 class="banner__heading">
-                    Browse characters <br> create your team
-                </h1>
-                <div class="banner__inputs">
-                    <input class="user-input" type="text" placeholder="Enter User">
-                    <button class="user-submit">CREATE TEAM</button>
+        <main class="main">
+            <section class="banner">
+                <div class="banner__inner">
+                    <h1 class="banner__heading">
+                        Browse characters <br> create your team
+                    </h1>
+                    <div class="banner__inputs">
+                        <input class="user-input" type="text" placeholder="Enter User">
+                        <button class="user-submit">CREATE TEAM</button>
+                    </div>
                 </div>
-            </div>
-        </section>
-
-        <section class="content-section">
-            <h2 class="content-section__heading">Characters</h2>
-            <div class="content-section__content">
-
-            </div>
-        </section>
+            </section>
+    
+            <section class="content-section">
+                <div class="_container">
+                    <h2 class="content-section__heading">Characters</h2>
+                    <div class="content-section__search-character">
+                        <input type="text" class="search" placeholder="Type character name">
+                        <button class="search-btn">
+                            <img src="../img/search-dark.svg" alt="search">
+                        </button>
+                    </div>
+                    <div class="content-section__content hero">
+                    
+                    </div>
+                </div>
+                
+            </section>
+        </main>
 
         @@include("chunk/footer.html")
     </div>
