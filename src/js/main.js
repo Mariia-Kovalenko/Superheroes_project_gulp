@@ -42,16 +42,14 @@ const data = loadData.getData(URL + URL_CHARACTERS, 0, values.dataLimit);
 
 data.then(data => {
     characters = data;
-    //console.log(characters);
+    console.log(characters);
 
     displayCharacters(characters, 0, values.limitChar);
 
     //add Load More Button
     document.querySelector('.content-section').innerHTML += buttonTemplate('Load More');
 
-
     document.querySelector('.content-section__button').addEventListener('click', () => {
-        //console.log('click');
         document.querySelector('.content-section__content').innerHTML = '';
         if (values.limitChar < values.dataLimit) {
             values.limitChar += 10;
@@ -60,13 +58,33 @@ data.then(data => {
     });
 
 
-    const search = loadData.getData(URL + URL_CHARACTERS + URL_SEARCH_NAME + 'man', 0, 50);
-    search.then(data => console.log(data))
-            .catch(err => console.log(err));
+    const searchButton = document.querySelector('.search-btn');
+    searchButton.addEventListener('click', (e) => {
+        if (e.target && e.target.closest('button')) {
+            const name = document.querySelector('.search').value;
+            // checkName();
+            if (name) {
+                document.querySelector('.search').value = '';
+                searchCharacter(name);
+            }
+        }
+    })
 });
 
+function searchCharacter(characterName) {
+    console.log(characterName);
+    const search = loadData.getData(URL + URL_CHARACTERS + URL_SEARCH_NAME + characterName, 0, 50);
+    search.then(data => {
+        console.log(data);
+        // let result = data;
+        characters = data
+        displayCharacters(characters, 0, characters.length);
+    })
+    .catch(err => console.log(err));
+}
 
 function displayCharacters(characters, start, limit) {
+    document.querySelector('.content-section__content').innerHTML = '';
     let i = start;
     while (limit > 0) {
         if (characters[i].thumbnail) {
