@@ -7,11 +7,14 @@
 @import "blocks/null.scss";
 @import "blocks/variables.scss";
 @import "blocks/mixins.scss";
+@import "blocks/character-modal.scss";
+@import "blocks/loader.scss";
 
 .hide{
     display: none;
-    opacity: 0;
+    // opacity: 0;
 }
+
 
 body{
     font-family: $font-main;

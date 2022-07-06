@@ -1,0 +1,120 @@
+.modal {
+    background-color: rgba(33, 33, 33, 0.639);
+    @include size(100%, 100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    z-index: 7;
+    @include element-flex(row, center, center);
+
+    &__character__inner {
+        @include size(400px, 700px);
+        background-color: white;
+        position: relative;
+    }
+}
+
+.character {
+    height: 100%;
+    &__details {
+        display: flex;
+        gap: 20px;
+        height: 100%;
+    }
+
+    &__info {
+        padding: 20px 30px 20px 15px;
+
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 60%;
+    }
+
+    &__img {
+        min-width: 285px;
+        // min-height: 400px;
+        // height: fit-content;
+
+        background-color:rgb(30, 25, 25)
+    }
+
+    &-image {
+        width: 285px;
+        height: 400px;
+        object-fit: cover;
+    }
+
+    &__name {
+        font-weight: 600;
+        font-size: 20px;
+        text-transform: uppercase;
+        text-align: center;
+        max-width: 90%;
+
+        margin-bottom: 10px;
+        // margin-top: 10px;
+    }
+
+    &__buttons{
+        flex: 0 0 auto;
+        gap: 8px;
+
+        @include element-flex(row, center, space-between)
+    }
+
+    &__button {
+        @include size(50px, 150px);
+        font-family: $font-main;
+        text-transform: uppercase;
+        font-size: 12px;
+        font-weight: 600;
+
+    }
+}
+
+.view-comics {
+    border: 1.5px solid $header-bg;
+}
+.add {
+    background-color: $red-color;
+    color: white;
+}
+.info__inner {
+    flex: 1 0 auto;
+}
+
+.comics {
+    &__link {
+        font-size: 13px;
+        color: inherit;
+
+        &:hover {
+            font-weight: 500;
+        }
+    }
+}
+
+.close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+}
+
+.head {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.description-text {
+    font-size: 13px;
+    margin-bottom: 15px;
+    color: #605E5E;
+}
+
+.comics__list {
+    color: #605E5E;
+}

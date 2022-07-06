@@ -1,8 +1,7 @@
 "use strict";
 
-import axios from "axios";
-import { heroTemplate, buttonTemplate } from "./module/templates.js";
-import {API_KEY, URL, URL_CHARACTERS, URL_SEARCH_NAME} from './module/api.js';
+import { heroTemplate, buttonTemplate, heroInfo, loader } from "./module/templates.js";
+import {loadDataAPI, API_KEY, URL, URL_CHARACTERS, URL_SEARCH_NAME} from './module/api.js';
 
 import {toggleSideNav} from "./module/sidenav.js"
 
@@ -16,26 +15,6 @@ const values = {
 
 toggleSideNav();
 
-class loadDataAPI {
-    async getData(url, start, end) {
-        try {
-            //try to send a request to server woth API key
-            const response = await axios.get(url, {
-                params: {
-                    apikey: API_KEY,
-                    offset: start,
-                    limit: end
-                }
-            });
-            //return list of characters
-            return response.data.data.results;
-        } catch (error) {
-            console.log(error.message);
-            return false;
-        }
-    }
-}
-
 const loadData = new loadDataAPI();
 
 const data = loadData.getData(URL + URL_CHARACTERS, 0, values.dataLimit);
@@ -48,18 +27,28 @@ data.then(data => {
 
     //add Load More Button
     document.querySelector('.content-section').innerHTML += buttonTemplate('Load More');
+    // enable load more characters
+    document.querySelector('.content-section__button').addEventListener('click', loadMoreCharacters);
+    // enable search character btn
+    document.querySelector('.search-btn').addEventListener('click', toggleSearchCharacter);
+    // show character details
+    document.querySelector('.content-section__content').addEventListener('click', showCharacterDetails);
 
-    document.querySelector('.content-section__button').addEventListener('click', () => {
+    // close modal
+    document.querySelector('.modal__character').addEventListener('click', closeCharacterModal);
+});
+
+// ---------------
+
+function loadMoreCharacters() {
         document.querySelector('.content-section__content').innerHTML = '';
         if (values.limitChar < values.dataLimit) {
             values.limitChar += 10;
             displayCharacters(characters, 0, values.limitChar);
         }
-    });
+}
 
-
-    const searchButton = document.querySelector('.search-btn');
-    searchButton.addEventListener('click', (e) => {
+function toggleSearchCharacter(e) {
         if (e.target && e.target.closest('button')) {
             const name = document.querySelector('.search').value;
             // checkName();
@@ -68,15 +57,15 @@ data.then(data => {
                 searchCharacter(name);
             }
         }
-    })
-});
+}
 
 function searchCharacter(characterName) {
     console.log(characterName);
     const search = loadData.getData(URL + URL_CHARACTERS + URL_SEARCH_NAME + characterName, 0, 50);
     search.then(data => {
-        console.log(data);
+        // console.log(data);
         // let result = data;
+        values.dataLimit = data.length;
         characters = data
         displayCharacters(characters, 0, characters.length);
     })
@@ -86,18 +75,72 @@ function searchCharacter(characterName) {
 function displayCharacters(characters, start, limit) {
     document.querySelector('.content-section__content').innerHTML = '';
     let i = start;
+    // console.log('limit: ', limit);
     while (limit > 0) {
         if (characters[i].thumbnail) {
-            //console.log(characters[i]);
-            const path = characters[i].thumbnail.path;
-            const extension = characters[i].thumbnail.extension;
             const name = characters[i].name;
+            const id = characters[i].id;
+            const imgPath = extractImageSrc(characters[i]);
 
-            if (!path.includes('image_not_available')) {
-                document.querySelector('.content-section__content').innerHTML += heroTemplate(`${path}.${extension}`, name);
+            if (!imgPath.includes('image_not_available')) {
+                document.querySelector('.content-section__content').innerHTML += heroTemplate(`${imgPath}`, name, id);
                 limit--;
             }
         }
         i++;
     }
+}
+
+function showCharacterDetails(e) {
+        const hero =  e.target.closest('.hero__block');
+        // console.log(hero);
+        const heroId = +(hero.id);
+        const character = characters.find(char => char.id === heroId);
+        // console.log(character);
+
+        const heroImage =  extractImageSrc(character);
+        console.log(heroImage);
+
+        const characterInfo = {
+            name: character.name,
+            img: heroImage,
+            description: character.description,
+            comics: character.comics.collectionURI
+        }
+
+        console.log(characterInfo);
+
+        showCharacterModal(characterInfo);
+    }
+
+function showCharacterModal(characterInfo) {
+
+    const modal = document.querySelector('.modal__character')
+    modal.classList.remove('hide');
+    document.body.style.overflow = 'hidden';
+
+    const character = document.querySelector('.character');
+
+    character.innerHTML = loader();
+    const comics = loadData.getData(characterInfo.comics);
+    comics.then(result => {
+        console.log(result);
+
+        characterInfo.comics = result;
+
+        character.innerHTML = heroInfo(characterInfo);
+    })
+}
+
+function closeCharacterModal() {
+    const modal = document.querySelector('.modal__character')
+    modal.classList.add('hide');
+    document.body.style.overflow = '';
+}
+
+function extractImageSrc(character) {
+    const path = character.thumbnail.path;
+    const extension = character.thumbnail.extension;
+
+    return path + '.' + extension;
 }
